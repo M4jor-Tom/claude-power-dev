@@ -3,6 +3,11 @@
 # Patterns taken from what Claude Code generates in ~/.claude.
 settings.local.json
 .credentials.json
+# Machine-local state. Normally ~/.claude.json, but it moves *inside* the
+# config dir when CLAUDE_CONFIG_DIR points here. Holds oauthAccount, userID,
+# machineID, mcpServers and the path history of every project opened.
+.claude.json
+.claude.json.backup
 mcp-needs-auth-cache.json
 history.jsonl
 .last-cleanup
