@@ -1,0 +1,15 @@
+[submodule "plugins/marketplaces/claude-plugins-official"]
+	path = plugins/marketplaces/claude-plugins-official
+	url = https://github.com/anthropics/claude-plugins-official.git
+[submodule "plugins/marketplaces/ponytail"]
+	path = plugins/marketplaces/ponytail
+	url = https://github.com/DietrichGebert/ponytail.git
+[submodule "plugins/marketplaces/thedotmack"]
+	path = plugins/marketplaces/thedotmack
+	url = https://github.com/thedotmack/claude-mem.git
+[submodule "plugins/marketplaces/ui-ux-pro-max-skill"]
+	path = plugins/marketplaces/ui-ux-pro-max-skill
+	url = https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
+[submodule "plugins/marketplaces/understand-anything"]
+	path = plugins/marketplaces/understand-anything
+	url = https://github.com/Egonex-AI/Understand-Anything.git
