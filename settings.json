@@ -1,0 +1,86 @@
+{
+  "cleanupPeriodDays": 15,
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "Bash(* --help *)",
+      "Bash(man *)",
+      "Bash(* --version)",
+      "Bash(pwd)",
+      "Bash(which *)",
+      "Bash(echo *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(jq *)",
+      "Bash(curl *)",
+      "Bash(wc *)",
+      "Bash(rtk *)",
+      "Bash(go *)",
+      "Bash(gofmt *)",
+      "Bash(goimports *)",
+      "Bash(golangci-lint *)",
+      "Bash(gopls *)",
+      "Bash(air *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(bun *)",
+      "Bash(bunx *)",
+      "Bash(ng *)",
+      "Bash(node *)",
+      "Bash(pnpm *)",
+      "Bash(yarn *)",
+      "Bash(playwright-cli *)",
+      "Bash(git *)",
+      "Bash(make *)",
+      "Bash(docker *)",
+      "Bash(kubectl *)",
+      "Bash(helm *)",
+      "Bash(terraform *)",
+      "Bash(tofu *)",
+      "Bash(ansible *)",
+      "Bash(ssh-keygen *)",
+      "Bash(rm -rf /tmp/*)",
+      "Bash(rm -f /tmp/*)"
+    ],
+    "deny": [
+      "Bash(terraform destroy *)",
+      "Bash(tofu destroy *)"
+    ],
+    "defaultMode": "auto"
+  },
+  "worktree": {
+    "symlinkDirectories": [
+      "node_modules"
+    ],
+    "baseRef": "fresh"
+  },
+  "enableWorkflows": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bunx -y ccstatusline@latest",
+    "padding": 0,
+    "refreshInterval": 10
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "claude-mem@thedotmack": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "understand-anything@understand-anything": true,
+    "ponytail@ponytail": true
+  },
+  "language": "English",
+  "sandbox": {
+    "enabled": false
+  },
+  "spinnerTipsEnabled": false,
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "auto"
+}

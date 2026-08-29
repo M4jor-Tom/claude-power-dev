@@ -1,0 +1,36 @@
+# Claude Code runtime state — this repo may be mounted as <repo>/.claude/,
+# where Claude Code writes session/runtime files next to the tracked config.
+# Patterns taken from what Claude Code generates in ~/.claude.
+settings.local.json
+.credentials.json
+mcp-needs-auth-cache.json
+history.jsonl
+.last-cleanup
+sessions/
+session-env/
+projects/
+cache/
+paste-cache/
+file-history/
+shell-snapshots/
+tasks/
+todos/
+plans/
+telemetry/
+statsig/
+jobs/
+daemon/
+backups/
+ide/
+*.bak
+
+# Plugin state. Marketplaces are tracked as submodules (see .gitmodules);
+# everything below is either derived from them or machine-specific.
+plugins/cache/
+plugins/data/
+plugins/plugin-catalog-cache.json
+plugins/.last_inuse_sweep
+# These pin plugin versions but hardcode absolute install paths, so they
+# are not portable across machines. See README.md to restore marketplaces.
+plugins/installed_plugins.json
+plugins/known_marketplaces.json
