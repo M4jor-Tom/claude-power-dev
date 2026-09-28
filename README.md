@@ -1,65 +1,56 @@
-# Claude Code config
+# claude-power-dev
 
-Versioned `~/.claude`: user config, custom skills, rules, and the plugin
-marketplaces as git submodules.
+A Claude Code config directory: general-purpose coding profile. `pi-power-dev`
+is its pi port.
 
-Runtime state Claude Code regenerates (`sessions/`, `projects/`, `cache/`,
-`plugins/cache/`, `telemetry/`, …) is ignored — see `.gitignore`.
+## Use it
 
-## Restore on a new machine
-
-```bash
-git clone --recursive <this-repo> ~/.claude
-```
-
-Already cloned without `--recursive`:
+Without Nix — this repo *is* the config dir:
 
 ```bash
-git -C ~/.claude submodule update --init
+git clone https://github.com/M4jor-Tom/claude-power-dev.git ~/.claude-power-dev
+CLAUDE_CONFIG_DIR=~/.claude-power-dev claude
 ```
 
-That restores every marketplace at its pinned commit. Claude Code does not
-know they are registered yet, because `known_marketplaces.json` and
-`installed_plugins.json` hardcode absolute install paths and are therefore
-not tracked. Register them once, in Claude Code:
-
-```
-/plugin marketplace add anthropics/claude-plugins-official
-/plugin marketplace add DietrichGebert/ponytail
-/plugin marketplace add thedotmack/claude-mem
-/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
-/plugin marketplace add Egonex-AI/Understand-Anything
-```
-
-Then reinstall the plugins:
-
-```
-/plugin install superpowers@claude-plugins-official
-/plugin install frontend-design@claude-plugins-official
-/plugin install claude-md-management@claude-plugins-official
-/plugin install github@claude-plugins-official
-/plugin install playwright@claude-plugins-official
-/plugin install ponytail@ponytail
-/plugin install claude-mem@thedotmack
-/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
-/plugin install understand-anything@understand-anything
-```
-
-## Updating a marketplace
-
-Claude Code updates the checkout in place; the submodule then points at a new
-commit. Record it:
+With Nix, which also supplies every CLI the skills shell out to:
 
 ```bash
-git -C ~/.claude add plugins/marketplaces/<name>
-git -C ~/.claude commit -m "chore(plugins): bump <name>"
+nix run github:M4jor-Tom/claude-power-dev.app
 ```
 
-`claude-plugins-official` is the exception — Claude Code refreshes it from a
-tarball rather than by `git pull`, so after an update reconcile it against the
-SHA in its `.gcs-sha` file:
+`CLAUDE_CONFIG_DIR` makes this repo what `~/.claude` would normally be, so the
+`settings.json` here is the user-level settings file.
+
+## Layout
+
+| Path | Role |
+|---|---|
+| `CLAUDE.md` | Global memory, loaded at every session start |
+| `RTK.md`, `conventional-commits.md` | Imported by `CLAUDE.md` |
+| `rules/` | Additional imported rules |
+| `settings.json` | Settings, plugin marketplaces, enabled plugins |
+| `skills/` | Locally authored skills |
+| `docs/superpowers/` | Specs and plans |
+
+## Plugins
+
+`settings.json` declares every marketplace in `extraKnownMarketplaces` and
+every plugin in `enabledPlugins`, so a bare clone needs no manual
+registration: Claude Code clones a declared-but-missing marketplace and
+downloads its enabled plugins in the background *after* the session starts.
+The first session on a new machine therefore needs a login before the plugins
+appear. To force the sync instead of waiting:
 
 ```bash
-cd ~/.claude/plugins/marketplaces/claude-plugins-official
-git fetch && git checkout "$(cat .gcs-sha)"
+claude plugin marketplace update
 ```
+
+`plugins/` is untracked — it is a cache, and its index files hardcode absolute
+install paths.
+
+## Runtime state
+
+Claude Code writes sessions, projects, caches, credentials and its plugin cache
+into the config dir, which is this repo. All of it is ignored; see
+`.gitignore`. Keeping that list complete matters: one untracked file makes
+`claude-power-dev.app` skip its auto-pull, silently.
