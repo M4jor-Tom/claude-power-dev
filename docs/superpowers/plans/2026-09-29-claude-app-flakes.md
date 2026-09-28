@@ -176,9 +176,13 @@ Confirm rather than re-edit:
 
 ```bash
 cd ~/repos/claude-power-dev
-git check-ignore -v plugins/known_marketplaces.json plugins/x.bak-123 daemon.log .ponytail-active .credentials.json
-# each line must print a matching rule, and these must print NOTHING:
-git check-ignore -v docs/superpowers/plans/x.md skills/foo/cache/y.md docs/tasks/z.md; echo "exit=$? (1 = correctly not ignored)"
+# --no-index, so the result does not depend on whether Step 4 has run yet:
+# check-ignore silently skips paths that are still tracked.
+git check-ignore -v --no-index plugins/known_marketplaces.json plugins/x.bak-123 \
+  daemon.log .ponytail-active .credentials.json
+# each of those must print a matching rule; these must print NOTHING:
+git check-ignore -v --no-index docs/superpowers/plans/x.md skills/foo/cache/y.md docs/tasks/z.md
+echo "exit=$? (1 = correctly not ignored)"
 ```
 
 - [ ] **Step 6: Rewrite README.md**
