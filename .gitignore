@@ -1,41 +1,47 @@
-# Claude Code runtime state — this repo may be mounted as <repo>/.claude/,
-# where Claude Code writes session/runtime files next to the tracked config.
-# Patterns taken from what Claude Code generates in ~/.claude.
-settings.local.json
-.credentials.json
+# Claude Code runtime state. CLAUDE_CONFIG_DIR points at this repo, so Claude
+# Code writes its session and cache files next to the tracked config.
+#
+# Every rule below is anchored with a leading "/": these are root-level state
+# names, and unanchored they also swallow real content at any depth — an
+# unanchored "plans/" hides docs/superpowers/plans/, "tasks/" and "cache/"
+# would hide any nested directory of that name.
+/settings.local.json
 # Machine-local state. Normally ~/.claude.json, but it moves *inside* the
 # config dir when CLAUDE_CONFIG_DIR points here. Holds oauthAccount, userID,
 # machineID, mcpServers and the path history of every project opened.
-.claude.json
-.claude.json.backup
-mcp-needs-auth-cache.json
-history.jsonl
-.last-cleanup
-sessions/
-session-env/
-projects/
-cache/
-paste-cache/
-file-history/
-shell-snapshots/
-tasks/
-todos/
-plans/
-telemetry/
-statsig/
-jobs/
-daemon/
-backups/
-ide/
-*.bak
+/.claude.json
+/.claude.json.backup
+/mcp-needs-auth-cache.json
+/history.jsonl
+/.last-cleanup
+/sessions/
+/session-env/
+/projects/
+/cache/
+/paste-cache/
+/file-history/
+/shell-snapshots/
+/tasks/
+/todos/
+/plans/
+/telemetry/
+/statsig/
+/jobs/
+/daemon/
+/daemon.log
+/ide/
+/backups/
 
-# Plugin state. Marketplaces are tracked as submodules (see .gitmodules);
-# everything below is either derived from them or machine-specific.
-plugins/cache/
-plugins/data/
-plugins/plugin-catalog-cache.json
-plugins/.last_inuse_sweep
-# These pin plugin versions but hardcode absolute install paths, so they
-# are not portable across machines. See README.md to restore marketplaces.
-plugins/installed_plugins.json
-plugins/known_marketplaces.json
+# Plugin state: a cache whose index files hardcode absolute install paths.
+# Marketplaces and plugins are declared in settings.json instead.
+/plugins/
+
+# Hook-written markers. Keeping this list complete matters: one untracked file
+# makes claude-power-dev.app skip its auto-pull, silently.
+/.ponytail-*
+
+# Secrets and editor backups, deliberately unanchored — ignore these at any
+# depth. *.bak* rather than *.bak: Claude Code leaves suffixed backups such as
+# known_marketplaces.json.bak-1789077141.
+.credentials.json
+*.bak*
