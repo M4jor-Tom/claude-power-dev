@@ -526,9 +526,12 @@ grep -q 'export CLAUDE_CONFIG_DIR=' "$BIN" || note "wrapper does not export CLAU
 grep -q 'exec claude ' "$BIN" || note "wrapper does not exec claude"
 grep -q 'git clone --recursive' "$BIN" || note "clone is not --recursive"
 # Resolve each expected binary inside the wrapper's own PATH, rather than the
-# caller's. writeShellApplication emits: export PATH="<dir>:<dir>:...:$PATH"
-WPATH="$(sed -n 's/^export PATH="\(.*\)":\$PATH$/\1/p' "$BIN" | head -1)"
-[ -n "$WPATH" ] || note "could not extract the wrapper's PATH"
+# caller's. writeShellApplication emits one line, with $PATH INSIDE the quotes:
+#   export PATH="/nix/store/...-a/bin:/nix/store/...-b/bin:$PATH"
+WPATH="$(sed -n 's/^export PATH="\(.*\):\$PATH"$/\1/p' "$BIN" | head -1)"
+# Guard the extraction itself: an empty WPATH would make every check below
+# pass vacuously.
+[ -n "$WPATH" ] || { echo "FAIL: could not extract the wrapper's PATH from $BIN"; exit 1; }
 IFS=: read -r -a wdirs <<< "$WPATH"
 for t in claude git gh glab node bun pnpm rg fd jq yq uv python3 sqlite3 curl chromium magick rtk graphify markitdown pandoc pdftotext yt-dlp; do
   found=0
