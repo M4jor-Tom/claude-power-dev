@@ -525,6 +525,19 @@ grep -q 'export PATH=' "$BIN" || note "wrapper does not set PATH"
 grep -q 'export CLAUDE_CONFIG_DIR=' "$BIN" || note "wrapper does not export CLAUDE_CONFIG_DIR"
 grep -q 'exec claude ' "$BIN" || note "wrapper does not exec claude"
 grep -q 'git clone --recursive' "$BIN" || note "clone is not --recursive"
+
+# The submodule update must be reachable only from the successful-pull branch
+# of the if/else below, never unconditional and never past the else — the
+# whole reason this wrapper diverges from the pi-*.app originals.
+PULL_LINE="$(grep -n 'pull --ff-only' "$BIN" | head -1 | cut -d: -f1 || true)"
+SUBMOD_LINE="$(grep -n 'submodule update --init --recursive' "$BIN" | head -1 | cut -d: -f1 || true)"
+ELSE_LINE="$(grep -n '^[[:space:]]*else$' "$BIN" | head -1 | cut -d: -f1 || true)"
+if [ -z "$PULL_LINE" ] || [ -z "$SUBMOD_LINE" ] || [ -z "$ELSE_LINE" ]; then
+  note "could not locate pull/submodule-update/else lines to check gating"
+elif [ "$SUBMOD_LINE" -le "$PULL_LINE" ] || [ "$SUBMOD_LINE" -ge "$ELSE_LINE" ]; then
+  note "submodule update is not gated inside the successful-pull branch"
+fi
+
 # Resolve each expected binary inside the wrapper's own PATH, rather than the
 # caller's. writeShellApplication emits one line, with $PATH INSIDE the quotes:
 #   export PATH="/nix/store/...-a/bin:/nix/store/...-b/bin:$PATH"
