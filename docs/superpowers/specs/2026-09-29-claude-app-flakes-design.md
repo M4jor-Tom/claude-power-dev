@@ -65,10 +65,15 @@ pi never needed it because `pi-coding-agent` is free-licensed. Because the
 flake builds its own `pkgs`, this does not depend on the user's nixpkgs
 config.
 
-`claude-code`'s `meta.platforms` omits `x86_64-darwin`, which `nix-systems/default`
-enumerates. Nix's laziness means only the invoked system is evaluated, so
-`nix run` is unaffected; `nix flake show --all-systems` would fail on that
-one system. Accepted.
+`chromium` is Linux-only in nixpkgs at this rev. Before it was gated out of
+`runtimeInputs`, that made evaluation fail on `aarch64-darwin` too — for
+`nix run` itself, not only `nix flake show --all-systems` — and
+`claude-code`'s platform list was never the cause. `package.nix` now keeps
+`chromium` out of `runtimeInputs` off Linux and reports
+`platforms = claude-code.meta.platforms` (`aarch64-darwin` / `aarch64-linux` /
+`x86_64-linux`), the real supported set. `x86_64-darwin` still fails to
+evaluate: nixpkgs-unstable has dropped that platform wholesale at this rev,
+unrelated to this fix and out of scope.
 
 ### Wrapper
 
