@@ -229,11 +229,8 @@ every plugin in `enabledPlugins`, so a bare clone needs no manual
 registration: Claude Code clones a declared-but-missing marketplace and
 downloads its enabled plugins in the background *after* the session starts.
 The first session on a new machine therefore needs a login before the plugins
-appear. To force the sync instead of waiting:
-
-```bash
-claude plugin marketplace update
-```
+appear. There is no flag that forces this sooner — starting the session is
+what triggers it.
 
 `plugins/` is untracked — it is a cache, and its index files hardcode absolute
 install paths.
@@ -810,7 +807,8 @@ The profile declares its marketplaces in `settings.json`
 (`extraKnownMarketplaces`) and its plugins in `enabledPlugins`. Claude Code
 clones a declared-but-missing marketplace and downloads its enabled plugins in
 the background *after* the session starts, so on a brand-new machine log in
-first and the plugins follow. `claude plugin marketplace update` forces it.
+first and the plugins follow. There is no flag that forces this sooner —
+starting the session is what triggers it.
 
 ## Deliberately absent
 
@@ -1018,7 +1016,8 @@ The profile declares its marketplaces in `settings.json`
 (`extraKnownMarketplaces`) and its plugins in `enabledPlugins`. Claude Code
 clones a declared-but-missing marketplace and downloads its enabled plugins in
 the background *after* the session starts, so on a brand-new machine log in
-first and the plugins follow. `claude plugin marketplace update` forces it.
+first and the plugins follow. There is no flag that forces this sooner —
+starting the session is what triggers it.
 ```
 
 - [ ] **Step 5: Build, then run the check**
@@ -1152,7 +1151,8 @@ working tree when a checkout drops its gitlink, and `plugins/` is ignored by
 the incoming `.gitignore`, so the five marketplace checkouts survive and the
 live session keeps its plugins. `git submodule deinit` would delete them and is
 deliberately never run. If a git version prunes them anyway, the recovery is
-`claude plugin marketplace update`, which is what the declarations are for.
+starting a session, whose background reconcile re-clones them from
+`extraKnownMarketplaces` — which is what those declarations are for.
 
 - [ ] **Step 7: Run the check**
 
