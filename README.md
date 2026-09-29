@@ -39,11 +39,8 @@ every plugin in `enabledPlugins`, so a bare clone needs no manual
 registration: Claude Code clones a declared-but-missing marketplace and
 downloads its enabled plugins in the background *after* the session starts.
 The first session on a new machine therefore needs a login before the plugins
-appear. To force the sync instead of waiting:
-
-```bash
-claude plugin marketplace update
-```
+appear. There is no flag that forces this sooner — starting the session is
+what triggers it.
 
 `plugins/` is untracked — it is a cache, and its index files hardcode absolute
 install paths.
