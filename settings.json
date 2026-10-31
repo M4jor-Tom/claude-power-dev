@@ -73,7 +73,8 @@
     "claude-mem@thedotmack": true,
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
     "understand-anything@understand-anything": true,
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "i-have-adhd@i-have-adhd": true
   },
   "language": "English",
   "sandbox": {
@@ -113,6 +114,12 @@
       "source": {
         "source": "github",
         "repo": "Egonex-AI/Understand-Anything"
+      }
+    },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
       }
     }
   }
