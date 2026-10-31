@@ -1,0 +1,21 @@
+[submodule "vendor/claude-plugins-official"]
+	path = vendor/claude-plugins-official
+	url = https://github.com/anthropics/claude-plugins-official.git
+[submodule "vendor/superpowers"]
+	path = vendor/superpowers
+	url = https://github.com/obra/superpowers.git
+[submodule "vendor/ponytail"]
+	path = vendor/ponytail
+	url = https://github.com/DietrichGebert/ponytail.git
+[submodule "vendor/claude-mem"]
+	path = vendor/claude-mem
+	url = https://github.com/thedotmack/claude-mem.git
+[submodule "vendor/ui-ux-pro-max-skill"]
+	path = vendor/ui-ux-pro-max-skill
+	url = https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
+[submodule "vendor/understand-anything"]
+	path = vendor/understand-anything
+	url = https://github.com/Egonex-AI/Understand-Anything.git
+[submodule "vendor/i-have-adhd"]
+	path = vendor/i-have-adhd
+	url = https://github.com/ayghri/i-have-adhd.git

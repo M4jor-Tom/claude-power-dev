@@ -65,16 +65,16 @@
     "refreshInterval": 10
   },
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "github@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "claude-mem@thedotmack": true,
-    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "understand-anything@understand-anything": true,
-    "ponytail@ponytail": true,
-    "i-have-adhd@i-have-adhd": true
+    "frontend-design@claude-plugins-official": false,
+    "superpowers@claude-plugins-official": false,
+    "github@claude-plugins-official": false,
+    "playwright@claude-plugins-official": false,
+    "claude-md-management@claude-plugins-official": false,
+    "claude-mem@thedotmack": false,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": false,
+    "understand-anything@understand-anything": false,
+    "ponytail@ponytail": false,
+    "i-have-adhd@i-have-adhd": false
   },
   "language": "English",
   "sandbox": {
@@ -90,37 +90,5 @@
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "theme": "auto",
-  "agentPushNotifEnabled": true,
-  "extraKnownMarketplaces": {
-    "thedotmack": {
-      "source": {
-        "source": "github",
-        "repo": "thedotmack/claude-mem"
-      }
-    },
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
-    },
-    "ui-ux-pro-max-skill": {
-      "source": {
-        "source": "github",
-        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
-      }
-    },
-    "understand-anything": {
-      "source": {
-        "source": "github",
-        "repo": "Egonex-AI/Understand-Anything"
-      }
-    },
-    "i-have-adhd": {
-      "source": {
-        "source": "github",
-        "repo": "ayghri/i-have-adhd"
-      }
-    }
-  }
+  "agentPushNotifEnabled": true
 }

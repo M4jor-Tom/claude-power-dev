@@ -32,8 +32,8 @@
 /ide/
 /backups/
 
-# Plugin state: a cache whose index files hardcode absolute install paths.
-# Marketplaces and plugins are declared in settings.json instead.
+# Legacy plugin cache: its index files hardcode absolute install paths.
+# Plugins now load through skills/ symlinks into vendor/ submodules.
 /plugins/
 
 # Hook-written markers. Keeping this list complete matters: one untracked file
