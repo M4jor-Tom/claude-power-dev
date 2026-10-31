@@ -1,67 +1,53 @@
-# pi-power-dev
+# claude-power-dev
 
-A [pi](https://pi.dev) agent directory: general-purpose coding profile,
-ported from `M4jor-Tom/claude-power-dev`.
+A Claude Code config directory: general-purpose coding profile. `pi-power-dev`
+is its pi port.
 
 ## Use it
 
-Without Nix — this repo *is* the agent dir:
+Without Nix — this repo *is* the config dir:
 
 ```bash
-git clone https://github.com/M4jor-Tom/pi-power-dev.git ~/.pi-power-dev
-PI_CODING_AGENT_DIR=~/.pi-power-dev pi
+git clone https://github.com/M4jor-Tom/claude-power-dev.git ~/.claude-power-dev
+CLAUDE_CONFIG_DIR=~/.claude-power-dev claude
 ```
 
 With Nix, which also supplies every CLI the skills shell out to:
 
 ```bash
-nix run github:M4jor-Tom/pi-power-dev.app
+nix run github:M4jor-Tom/claude-power-dev.app
 ```
 
-`PI_CODING_AGENT_DIR` replaces pi's `agent` subdirectory, so this repo's
-`settings.json` is what `~/.pi/agent/settings.json` would normally be.
+`CLAUDE_CONFIG_DIR` makes this repo what `~/.claude` would normally be, so the
+`settings.json` here is the user-level settings file.
 
 ## Layout
 
 | Path | Role |
 |---|---|
-| `AGENTS.md` | Global memory, loaded at every session start |
-| `settings.json` | pi settings, and the pinned `packages[]` manifest |
-| `mcp.json` | MCP servers, read by `pi-mcp-adapter` |
+| `CLAUDE.md` | Global memory, loaded at every session start |
+| `RTK.md`, `conventional-commits.md` | Imported by `CLAUDE.md` |
+| `rules/` | Additional imported rules |
+| `settings.json` | Settings, plugin marketplaces, enabled plugins |
 | `skills/` | Locally authored skills |
-| `prompts/` | Slash commands |
-| `extensions/` | TypeScript extensions (pi's replacement for hooks) |
-| `tests/` | `node --test` unit tests for the extensions |
-| `scripts/check.sh` | Integrity check, also run in CI |
+| `docs/superpowers/` | Specs and plans |
 
-Auth, sessions and memory are per-profile: because `PI_CODING_AGENT_DIR`
-points here, `auth.json`, `sessions/` and `pi-hermes-memory/` all land in
-this directory and are gitignored. Nothing is shared with `~/.pi` or with
-`pi-game-dev`.
+## Plugins
 
-## Updating pinned packages
+`settings.json` declares every marketplace in `extraKnownMarketplaces` and
+every plugin in `enabledPlugins`, so a bare clone needs no manual
+registration: Claude Code clones a declared-but-missing marketplace and
+downloads its enabled plugins in the background *after* the session starts.
+The first session on a new machine therefore needs a login before the plugins
+appear. There is no flag that forces this sooner — starting the session is
+what triggers it.
 
-Refs in `packages[]` are pinned. `pi update --extensions` reconciles clones
-to the configured ref; moving to a newer ref means editing `settings.json`
-(or `pi install git:host/user/repo@new-ref`) and committing.
+`plugins/` is untracked — it is a cache, and its index files hardcode absolute
+install paths.
 
-## Not ported from Claude Code
+## Runtime state
 
-pi has no equivalent, by design, for these — each was dropped deliberately:
-
-| Claude Code | Why it is gone |
-|---|---|
-| `permissions.allow` (41 entries) | pi has no permission prompts. Tool scoping is `defaultTools` / `--tools`. |
-| `statusLine: bunx ccstatusline` | pi's footer already shows cwd, session, tokens, cache, cost, context and model. |
-| `worktree`, `enableWorkflows`, `sandbox` | No analogue. |
-| `cleanupPeriodDays`, `spinnerTipsEnabled` | No analogue. |
-| `skipDangerousModePermissionPrompt`, `skipWorkflowUsageWarning` | Nothing to skip — there is no prompt. |
-| `github` MCP | Replaced by the `gh` CLI, which `AGENTS.md` already mandates. |
-| `playwright` MCP | Replaced by the `playwright-cli` skill. |
-| `understand-anything` | Its `prepare` script needs a pnpm + TypeScript build that pi's `npm install --omit=dev` cannot run, so installing it crashes pi at startup. Its skills' helper scripts and 7 of its 10 agents depend on that build too. The `graphify` skill covers the same "codebase to queryable knowledge graph" ground. To recover it, build the upstream monorepo out-of-band and point `skills` at the result. |
-
-## Known version gap
-
-`skills/graphify/.graphify_version` pins graphify 0.8.30; nixpkgs ships
-0.4.23. The app also ships `uv`, so the skill's own
-`uv tool install --upgrade graphifyy` path can take over.
+Claude Code writes sessions, projects, caches, credentials and its plugin cache
+into the config dir, which is this repo. All of it is ignored; see
+`.gitignore`. Keeping that list complete matters: one untracked file makes
+`claude-power-dev.app` skip its auto-pull, silently.

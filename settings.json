@@ -1,35 +1,119 @@
 {
-  "defaultThinkingLevel": "xhigh",
-  "defaultProjectTrust": "ask",
-  "enableSkillCommands": true,
-  "packages": [
-    "git:github.com/obra/superpowers@b36e0829c6d0140e93cfef2ca599b1b07d4a7797",
-    "git:github.com/DietrichGebert/ponytail@0a4dd63ad4541f4f655c4108a295916f3c1d8fda",
-    "npm:pi-hermes-memory@0.9.8",
-    "npm:pi-mcp-adapter@2.33.0",
-    "npm:pi-subagents@0.67.0",
-    "npm:pi-workspace-history@0.5.0",
-    "npm:pi-ultra-compact@1.3.0",
-    {
-      "source": "git:github.com/anthropics/claude-plugins-official@ed404106fcd80ba98ecb7c851e531dcb626d13b7",
-      "skills": [
-        "plugins/frontend-design/skills",
-        "plugins/claude-md-management/skills"
-      ],
-      "extensions": [],
-      "prompts": [],
-      "themes": []
-    },
-    {
-      "source": "git:github.com/nextlevelbuilder/ui-ux-pro-max-skill@1307d97a72e6c1cda572cb65471ae5ce82995218",
-      "skills": [
-        ".claude/skills"
-      ],
-      "extensions": [],
-      "prompts": [],
-      "themes": []
+  "cleanupPeriodDays": 15,
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "Bash(* --help *)",
+      "Bash(man *)",
+      "Bash(* --version)",
+      "Bash(pwd)",
+      "Bash(which *)",
+      "Bash(echo *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(jq *)",
+      "Bash(curl *)",
+      "Bash(wc *)",
+      "Bash(rtk *)",
+      "Bash(go *)",
+      "Bash(gofmt *)",
+      "Bash(goimports *)",
+      "Bash(golangci-lint *)",
+      "Bash(gopls *)",
+      "Bash(air *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(bun *)",
+      "Bash(bunx *)",
+      "Bash(ng *)",
+      "Bash(node *)",
+      "Bash(pnpm *)",
+      "Bash(yarn *)",
+      "Bash(playwright-cli *)",
+      "Bash(git *)",
+      "Bash(make *)",
+      "Bash(docker *)",
+      "Bash(kubectl *)",
+      "Bash(helm *)",
+      "Bash(terraform *)",
+      "Bash(tofu *)",
+      "Bash(ansible *)",
+      "Bash(ssh-keygen *)",
+      "Bash(rm -rf /tmp/*)",
+      "Bash(rm -f /tmp/*)"
+    ],
+    "deny": [
+      "Bash(terraform destroy *)",
+      "Bash(tofu destroy *)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "worktree": {
+    "symlinkDirectories": [
+      "node_modules"
+    ],
+    "baseRef": "fresh"
+  },
+  "enableWorkflows": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bunx -y ccstatusline@latest",
+    "padding": 0,
+    "refreshInterval": 10
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "claude-mem@thedotmack": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "understand-anything@understand-anything": true,
+    "ponytail@ponytail": true
+  },
+  "language": "English",
+  "sandbox": {
+    "enabled": false
+  },
+  "spinnerTipsEnabled": false,
+  "effortLevel": "xhigh",
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "xhigh"
     }
-  ],
-  "lastChangelogVersion": "0.85.1",
-  "theme": "dark"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "auto",
+  "agentPushNotifEnabled": true,
+  "extraKnownMarketplaces": {
+    "thedotmack": {
+      "source": {
+        "source": "github",
+        "repo": "thedotmack/claude-mem"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      }
+    },
+    "understand-anything": {
+      "source": {
+        "source": "github",
+        "repo": "Egonex-AI/Understand-Anything"
+      }
+    }
+  }
 }

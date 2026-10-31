@@ -1,76 +1,63 @@
-# pi profile: power-dev
+@RTK.md
 
 ## Git
 
-Commit format: `<type>[(scope)][!]: <description>`, with the body and footers
-separated by a blank line.
+@conventional-commits.md
+Gitflow : branches `feature/*`, `fix/*`, `release/*` depuis `develop`, merge vers `main` à la release.
+Ne **jamais** merge en fast-forward, toujours `--no-ff`.
 
-Types: `feat` (MINOR) · `fix` (PATCH) · `refactor` · `test` · `docs` · `ci` ·
-`chore` · `perf` · `build`.
-Breaking change: `!` after the type/scope **or** a `BREAKING CHANGE:` footer
-(MAJOR, case-sensitive).
-Reference: https://www.conventionalcommits.org/en/v1.0.0/
+## Commandes Bash
 
-Gitflow: create `feat/*`, `fix/*`, `release/*` branches from `develop`, merge
-into `main` at release; use `--ff-only` if the Git repository has fewer than
-4 developers.
+Préférer ces outils aux équivalents par défaut. Fallback silencieux si absent.
 
-## RTK — Rust Token Killer
+- **Recherche de contenu** : `rg` plutôt que `grep`
+- **Recherche de fichiers** : `fd` plutôt que `find`
+- **JSON** : `jq` pour tout parsing, filtrage ou transformation
+- **YAML/TOML** : `yq`
+- **GitHub** : `gh` pour PRs, issues, reviews, CI, releases. Ne pas scraper github.com ni taper l'API REST quand `gh` suffit.
+- **GitLab** : `glab` pour MRs, issues, reviews, CI, releases. Idem.
 
-Token-optimized CLI proxy (60-90% savings on development operations).
+## Workflow agents IA
 
-Meta-commands, to be entered exactly as shown:
+- **Invoque le skill `superpowers:using-superpowers` en début de session si demande de développement, fonctionnalité ou implémentation ; pas pour une question simple.**
+- **Vérifie dans le navigateur** (skill `playwright-cli`) sur **toute** US à incidence UI.
+- Toujours terminer une tâche de code par :
+  - `/simplify`
+  - `/ponytail:ponytail-review`
+  - Faire les ajustements si nécessaire.
 
-```bash
-rtk gain              # Token savings analytics
-rtk gain --history    # Command history with savings
-rtk discover          # Find missed opportunities
-rtk proxy <cmd>       # Run a raw command without filtering (debug)
-```
+## Orchestration du workflow
 
-All other commands are automatically rewritten by
-`extensions/rtk.ts`: `git status` becomes `rtk git status` before execution.
-No need to add a prefix manually. `rtk hook check "<cmd>"` shows the rewrite
-without applying it.
+### 1. Plan mode par défaut
 
-⚠ Name collision: if `rtk gain` fails, reachingforthejack/rtk (Rust Type Kit)
-is probably installed instead.
+- Entrer en plan mode pour TOUTE tâche non triviale (3+ étapes ou décision d'architecture).
+- Si ça dérape, STOP et re-planifier immédiatement — ne pas s'acharner.
+- Écrire des specs détaillées en amont pour réduire l'ambiguïté.
 
-## Bash commands
+### 2. Stratégie sous-agents
 
-Prefer these tools over the defaults. Fall back silently if unavailable.
+- Utiliser les sous-agents librement pour garder le contexte principal propre.
+- Déléguer recherche, exploration et analyse parallèle aux sous-agents.
 
-- **Content search**: `rg` rather than `grep`
-- **File search**: `fd` rather than `find`
-- **JSON**: `jq` for all parsing, filtering or transformation
-- **YAML/TOML**: `yq`
-- **GitHub**: `gh` for PRs, issues, reviews, CI, releases. Do not scrape
-  github.com or call the REST API when `gh` is sufficient.
-- **GitLab**: `glab` for MRs, issues, reviews, CI, releases. Same rule.
+### 3. Boucle d'auto-amélioration
 
-## Agent workflow
+- Après TOUTE correction de l'utilisateur : noter le pattern dans `tasks/lessons.md`.
+- Écrire des règles pour soi-même qui évitent de reproduire l'erreur.
 
-- **Verify in the browser** (`/skill:playwright-cli`) for **every** user story that affects the UI.
-- Always finish a coding task with `/simplify`, then
-  `/skill:ponytail-review`, then apply the adjustments.
+### 4. Vérification avant « terminé »
 
-## Orchestration
+- Ne jamais marquer une tâche comme terminée sans prouver qu'elle fonctionne.
+- Lancer les tests, vérifier les logs, démontrer la correction.
+- Lancer `/simplify`, lancer `/ponytail:ponytail-review`.
 
-- If things go off track, STOP and replan immediately — do not keep pushing.
-- Write detailed specs up front to reduce ambiguity.
-- Use the `subagent` tool freely to keep the main context clean: delegate
-  research, exploration and parallel analysis. Available agents are provided
-  by `pi-subagents`.
-- After user corrections: record the pattern in `docs/lessons.md` and
-  write a rule for yourself. Only store there information which does not fit in
-  project's existing documentation, or project memory's skills.
-- Never mark a task as complete without proving it works: run the tests,
-  check the logs, demonstrate the fix.
-- For nontrivial changes, ask yourself "Is there a more elegant way?".
-  Skip this step for simple, obvious fixes.
+### 5. Exiger de l'élégance (équilibré)
 
-## Principles
+- Pour les changements non triviaux : se demander « existe-t-il une façon plus élégante ? ».
+- Si un fix semble bricolé : « connaissant tout ce que je sais maintenant, implémente la solution élégante ».
+- Sauter cette étape pour les fixes simples et évidents — ne pas sur-concevoir.
 
-- **Simplicity first**: make every change as simple as possible.
-- **No laziness**: find the root causes. No temporary fixes.
-- **Minimal impact**: only touch what is necessary.
+## Principes fondamentaux
+
+- **Simplicité d'abord** : rendre chaque changement aussi simple que possible. Impact minimal.
+- **Pas de paresse** : trouver les causes racines. Pas de fix temporaire. Standards senior.
+- **Impact minimal** : ne toucher que le nécessaire. Éviter d'introduire des bugs.

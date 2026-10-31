@@ -1,49 +1,47 @@
-# This repo IS a pi agent dir (PI_CODING_AGENT_DIR points here), so pi writes
-# its runtime state next to the tracked config. Everything below is either a
-# secret, a cache, or derived from settings.json.
+# Claude Code runtime state. CLAUDE_CONFIG_DIR points at this repo, so Claude
+# Code writes its session and cache files next to the tracked config.
+#
+# Every rule below is anchored with a leading "/": these are root-level state
+# names, and unanchored they also swallow real content at any depth — an
+# unanchored "plans/" hides docs/superpowers/plans/, "tasks/" and "cache/"
+# would hide any nested directory of that name.
+/settings.local.json
+# Machine-local state. Normally ~/.claude.json, but it moves *inside* the
+# config dir when CLAUDE_CONFIG_DIR points here. Holds oauthAccount, userID,
+# machineID, mcpServers and the path history of every project opened.
+/.claude.json
+/.claude.json.backup
+/mcp-needs-auth-cache.json
+/history.jsonl
+/.last-cleanup
+/sessions/
+/session-env/
+/projects/
+/cache/
+/paste-cache/
+/file-history/
+/shell-snapshots/
+/tasks/
+/todos/
+/plans/
+/telemetry/
+/statsig/
+/jobs/
+/daemon/
+/daemon.log
+/ide/
+/backups/
 
-# Credentials and per-machine decisions.
-auth.json
-trust.json
+# Plugin state: a cache whose index files hardcode absolute install paths.
+# Marketplaces and plugins are declared in settings.json instead.
+/plugins/
 
-# Provider catalog cache; refresh with `pi update --models`.
-models-store.json
+# Hook-written markers. Keeping this list complete matters: one untracked file
+# makes claude-power-dev.app skip its auto-pull, silently.
+/.ponytail-*
 
-# Session history, and the fd/rg binaries pi downloads when they are not on PATH.
-sessions/
-bin/
-
-# Package installs, driven by the pinned packages[] array in settings.json.
-npm/
-git/
-node_modules/
-
-experimental/
-pi-debug.log
-*.bak
-
-# pi-hermes-memory state. Per-profile by construction, because it resolves
-# its paths from the agent dir.
-pi-hermes-memory/
-projects-memory/
-hermes-memory-config.json
-.pi-hermes-locks.sqlite
-mcp-cache.json
-
-# Runtime state written by pi and its packages. The agent dir is also the
-# repo, so anything uncovered here sits untracked forever — and one untracked
-# file disables the app wrapper's auto-pull, silently.
-.pi-hermes-locks.sqlite*
-mcp-*.json
-mcp-oauth/
-oauth.json*
-tmp/
-missions/
-chains/
-profiles/
-agent-memory/
-agent-plugin-data/
-extensions/subagent/
-.superpowers/
-tasks/
-state/
+# Secrets and editor backups, deliberately unanchored — ignore these at any
+# depth. *.bak* rather than *.bak: Claude Code leaves suffixed backups such as
+# known_marketplaces.json.bak-1789077141.
+.credentials.json
+*.bak*
